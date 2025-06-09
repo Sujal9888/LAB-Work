@@ -1,5 +1,5 @@
 #include <iostream>
-#include <limits>
+
 
 using namespace std;
 
@@ -19,7 +19,7 @@ int main() {
             if (cin.fail() || scores[i] < 0 || scores[i] > 100) {
                 cout << "Invalid score. Please enter a number between 0 and 100." << endl;
                 cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+             
             } else {
                 sum += scores[i];
                 break;
