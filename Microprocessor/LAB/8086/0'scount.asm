@@ -1,3 +1,5 @@
+;Sujal Meher Kayastha
+
 org 100h
 
 mov al, 5Ah       ; example number = 01011010
@@ -21,3 +23,4 @@ int 21h           ; print the number of 0s
 
 mov ah, 4Ch
 int 21h
+
