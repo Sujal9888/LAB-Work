@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+
 using namespace std;
 
 class Fmachine {
@@ -16,14 +17,19 @@ private:
     int capacity;
 
 public:
-    Aeroplane() : code(""), name(""), capacity(0) {}
+    Aeroplane() : capacity(0) {}
 
     void getdata() {
         cout << "Enter aeroplane code: ";
         cin >> code;
+        
+        // Manual loop to clear the input buffer after reading the code
+        char ch;
+        while ((ch = cin.get()) != '\n' && ch != EOF);
+        
         cout << "Enter aeroplane name: ";
-        cin.ignore();
         getline(cin, name);
+        
         cout << "Enter capacity: ";
         cin >> capacity;
     }
@@ -34,6 +40,10 @@ public:
         cout << "Name: " << name << endl;
         cout << "Capacity: " << capacity << endl;
         cout << "-------------------------\n";
+    }
+
+    ~Aeroplane() {
+        cout << "Aeroplane object destroyed." << endl;
     }
 };
 
@@ -46,8 +56,7 @@ int main() {
     ptr->putdata();
 
     delete ptr;
-
+    ptr = nullptr;
 
     return 0;
 }
-
