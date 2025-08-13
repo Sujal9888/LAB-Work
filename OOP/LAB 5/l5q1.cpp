@@ -22,6 +22,11 @@ public:
     void getdata() {
         cout << "Enter aeroplane code: ";
         cin >> code;
+        
+        // Manual loop to clear the input buffer after reading the code
+        char ch;
+        while ((ch = cin.get()) != '\n' && ch != EOF);
+        
         cout << "Enter aeroplane name: ";
         getline(cin, name);
         
