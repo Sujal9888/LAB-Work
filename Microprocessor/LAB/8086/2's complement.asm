@@ -1,76 +1,58 @@
-; Sujal Meher Kayastha
-; 2's complement (signed output)
-
+;Sujal Meher Kayastha
+;2's complement
 org 100h
-
 .data
-prompt db 'Enter a number (0-9): $'
-msg    db 13,10,'2''s complement is: $'
-minus  db '-' , '$'
-
+    msg1 db 'Enter a digit (0-9): $'
+    msg2 db 13,10,'2''s Complement is: $'
 .code
 start:
-    mov ax, @data
-    mov ds, ax
+    mov ax,@data
+    mov ds,ax
 
-    ; Display prompt
-    lea dx, prompt
-    mov ah, 09h
+    ; prompt
+    mov ah,09h
+    lea dx,msg1
     int 21h
 
-    ; Read input digit
-    mov ah, 01h
+    ; read single character
+    mov ah,01h
     int 21h
-    sub al, 30h          ; ASCII ? number
+    sub al,'0'       ; convert ASCII to number 0â€“9
 
-    ; Calculate 2's complement (4-bit only)
-    not al
-    add al, 1
-    and al, 0Fh          ; keep 4 bits
-    mov bl, al           ; store result
+    ; calculate 2's complement (4-bit)
+    mov bl,al
+    not bl           ; 1's complement
+    add bl,1         ; +1 ? 2's complement
+    and bl,0Fh       ; keep 4 bits
 
-    ; Show message
-    lea dx, msg
-    mov ah, 09h
-    int 21h
-
-    ; Check if signed negative (>=8)
-    cmp bl, 8
-    jb print_positive
-
-    ; Negative case
-    mov ah, 09h
-    lea dx, minus
-    int 21h
-    mov al, 16
-    sub al, bl           ; signed value = -(16-bl)
-    jmp print_number
-
-print_positive:
-    mov al, bl
-
-print_number:
-    ; Decimal conversion
-    mov ah, 0
-    mov cl, 10
-    div cl               ; AL ÷ 10 ? AL=quotient, AH=remainder
-
-    cmp al, 0
-    je print_units
-
-    ; Tens digit
-    add al, '0'
-    mov dl, al
-    mov ah, 02h
+    ; print message
+    mov ah,09h
+    lea dx,msg2
     int 21h
 
-print_units:
-    mov al, ah
-    add al, '0'
-    mov dl, al
-    mov ah, 02h
+    ; print decimal
+    mov al,bl
+    cmp al,9
+    jbe print_single
+    ; two-digit number
+    mov ah,0
+    mov bl,10
+    div bl           ; AL=tens, AH=ones
+    add al,'0'
+    mov dl,al
+    mov ah,02h
     int 21h
-
-    ; Exit
-    mov ah, 4Ch
+    add ah,'0'
+    mov dl,ah
+    mov ah,02h
     int 21h
+    jmp exit
+print_single:
+    add al,'0'
+    mov dl,al
+    mov ah,02h
+    int 21h
+exit:
+    mov ah,4Ch
+    int 21h
+end start
