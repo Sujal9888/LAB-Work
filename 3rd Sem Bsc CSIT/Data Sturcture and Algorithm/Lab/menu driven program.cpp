@@ -4,7 +4,8 @@ using namespace std;
 int main(){
 int a; int count=0;	int arr[max];
 do{
-	cout<<"\n Choose from the following options:"<<endl;
+	cout<<"\n ---Sujal Meher Kayastha--- "<<endl;
+	cout<<"\n Choose from the following options :"<<endl;
 	cout<<" 1. Insert data in array.\n"
 		<<" 2. Display element of array.\n"
 		<<" 3. Delete element of array.\n"
@@ -42,7 +43,7 @@ do{
 				break;
 			}
 			case 3:{
-				cout<<"\n Enter position of array to delete: ";
+				cout<<" Enter position of array to delete: ";
 				int i,j;
 				cin>>j;
 				if(j>count){
@@ -57,7 +58,7 @@ do{
 				break;
 			}
 			case 4:{
-				cout<<"\n Enter position of element to update: ";
+				cout<<" Enter position of element to update: ";
 				int update;
 				cin>>update;
 				if(update>count){
@@ -89,7 +90,7 @@ do{
 			case 6:{
 				cout<<"\n Minimum of array is: ";
 				int s=arr[0];
-				for(int i=0;i<count;i++){
+				for(int i=1;i<count;i++){
 					if(arr[i]<s){
 						s=arr[i];
 					}
@@ -101,7 +102,7 @@ do{
 			case 7:{
 				cout<<"\n Maximum of array is: ";
 				int l=arr[0];
-				for(int i=0;i<count-1;i++){
+				for(int i=1;i<count-1;i++){
 					if(arr[i]>l){
 						l=arr[i];
 					}
@@ -110,7 +111,7 @@ do{
 				break;
 			}
 			case 8:{
-				cout<<"\n Existing program."<<endl;
+				cout<<"\n Exiting program."<<endl;
 				break;
 			}
 		}
@@ -119,4 +120,3 @@ do{
 	return 0;
 }
 		
-
