@@ -85,13 +85,9 @@ int main(){
 		switch(a){
 			case 1:
 				int n;
-				cout<<"Enter no. of element to push:";
-				cin>>n;
-				for(int i=0;i<n;i++){
-					cout<<"Enter Data:";
-					cin>>data;
+				cout<<"\nEnter Data:";
+				cin>>data;
 				s.Push(data);
-				}
 				cout<<"Data Pushed."<<endl;
 				break;
 			
