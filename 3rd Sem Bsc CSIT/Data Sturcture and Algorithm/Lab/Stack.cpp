@@ -7,7 +7,7 @@ class Stack{
 public:
 	void MakeEmptyStack(){
 			top=-1;
-			cout<<"Stack is Empty now.\n";
+			cout<<"\nStack is Empty now.\n";
 		}
 	bool overflow(){
 			if(top==max-1){
@@ -39,10 +39,10 @@ public:
 	
 	void Pop(){
 			if(underflow()){
-				cout<<"Stack is empty"<<endl;
+				cout<<"\nStack is empty"<<endl;
 			}
 			else{
-				cout<<"Popped element is:";
+				cout<<"\nPopped element is:";
 				cout<<Stack[top]<<endl;
 				top--;
 				}
@@ -50,27 +50,27 @@ public:
 	
 	void Traverse(){
 			if(underflow()){
-				cout<<"Stack is empty"<<endl;
+				cout<<"\nStack is empty"<<endl;
 			}
 			else{
-				cout<<"Stack Elements from top to bottom are:"<<endl;
+				cout<<"\nStack Elements from top to bottom are:"<<endl;
 				for(int i=top; i>=0; i--){
-					cout<<Stack[i]<<" "<<endl;
+					cout<<Stack[i]<<endl;
 				}
 			}
 		}
 	
 	void Top(){
 			if(underflow()){
-				cout<<"Stack is empty"<<endl;
+				cout<<"\nStack is empty"<<endl;
 			}
 			else{
-				cout<<"Top element of stack is: "<<Stack[top]<<endl;
+				cout<<"\nTop element of stack is: "<<Stack[top]<<endl;
 			}
 		}
 };
 int main(){
-	int a; int n; int data;
+	int a; int data;
 	Stack s;
 	do{
 		cout<<"\nChoose the following options:"<< endl;
@@ -84,7 +84,6 @@ int main(){
 		cin>>a;
 		switch(a){
 			case 1:
-				int n;
 				cout<<"\nEnter Data:";
 				cin>>data;
 				s.Push(data);
