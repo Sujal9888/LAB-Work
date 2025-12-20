@@ -1,10 +1,10 @@
 #include<stdio.h>
 #include<math.h>
 double f(double x){
-	return x*x+ 4*x -9;
+	return x*x*x + x*x- 3*x-3;
 }
 double fd(double x){
-	return 2*x +4;
+	return 3*x*x+ 2*x-3;
 }
 int main(){
 	int itr=0;
@@ -18,11 +18,11 @@ int main(){
 		x1=x0-(fx/fdx);
 		
 		printf("\nIteration %d: x=%.5lf, f(x)=%.5lf ",itr+1, x0,fx);
-	if(fabs(x1-x0)<0.0001){
-		break;
-	}
-	x0=x1;
-	itr++;
+		if(fabs(x1-x0)<0.0001){
+			break;
+		}
+		x0=x1;
+		itr++;
 	}
 	printf("\nRoot is found at %lf",x1);
 return 0;
