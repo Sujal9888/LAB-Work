@@ -1,0 +1,18 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+
+ENTITY FA_SUJAL IS
+PORT(
+	A: IN STD_LOGIC;
+	B: IN STD_LOGIC;
+	C: IN STD_LOGIC;
+	SUM: OUT STD_LOGIC;
+	Carry: OUT STD_LOGIC
+	);
+END FA_SUJAL;
+ARCHITECTURE Behavior of FA_SUJAL IS
+
+BEGIN
+	SUM <= (A XOR B) XOR C;
+	Carry <= (A AND B) OR (B AND C) OR (A AND C);
+END Behavior;

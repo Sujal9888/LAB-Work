@@ -1,0 +1,17 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+
+ENTITY HA_SUJAL IS
+PORT(
+	A: IN STD_LOGIC;
+	B: IN STD_LOGIC;
+	SUM: OUT STD_LOGIC;
+	Carry: OUT STD_LOGIC
+	);
+END HA_SUJAL;
+ARCHITECTURE Behavior of HA_SUJAL IS
+
+BEGIN
+	SUM <= A XOR B;
+	Carry<= A AND B;
+END Behavior;
