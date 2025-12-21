@@ -3,6 +3,7 @@
 #include <cmath>
 #include <string>
 #include <iomanip>
+#include<algorithm>
 using namespace std;
 
 int precedence(char op) {
@@ -101,77 +102,48 @@ string infixToPostfix(const string &infix) {
 }
 
 string infixToPrefix(const string &infix) {
-    string revinf = "";
-    for(int i = infix.length()-1; i >= 0; i--){
-        if(infix[i]=='(') revinf += ')';
-        else if(infix[i]==')') revinf += '(';
-        else if(infix[i]=='{') revinf += '}';
-        else if(infix[i]=='}') revinf += '{';
-        else if(infix[i]=='[') revinf += ']';
-        else if(infix[i]==']') revinf += '[';
-        else revinf += infix[i];
-    }
+    stack<char> operators;
+    string prefix = "";
 
-    stack<char> opstack;
-    stack<char> postfixStack;
-    string output;
-
-    cout << "Char   Postfix        OpStack \n";
+    cout << "Char   Prefix         OpStack \n";
     cout << "----------------------------------\n";
 
-    for(int i = 0; i < revinf.length(); i++){
-        char a = revinf[i];
+    for (int i = infix.length() - 1; i >= 0; i--) {
+        char c = infix[i];
 
-        if(isalnum(a)){
-            postfixStack.push(a);
+        if (isalnum(c)) {
+            prefix = c + prefix;
         }
-        else if(a=='(' || a=='{' || a=='['){
-            opstack.push(a);
+        else if (c == ')' || c == '}' || c == ']') {
+            operators.push(c);
         }
-        else if(a==')' || a=='}' || a==']'){
-            char open;
-            if(a==')') open='(';
-            else if(a=='}') open='{';
-            else open='[';
-
-            while(!opstack.empty() && opstack.top()!=open){
-                postfixStack.push(opstack.top());
-                opstack.pop();
+        else if (c == '(' || c == '{' || c == '[') {
+            while (!operators.empty() && (operators.top() != ')' && operators.top() != '}' && operators.top() != ']')) {
+                prefix = operators.top() + prefix;
+                operators.pop();
             }
-            if(opstack.empty()) return "Error: Mismatched Brackets in Prefix Conversion";
-            opstack.pop();
+            if (!operators.empty()) operators.pop();
         }
-        else{
-            while(!opstack.empty() && precedence(opstack.top())>=precedence(a) &&
-                  opstack.top()!='(' && opstack.top()!='{' && opstack.top()!='['){
-                if((opstack.top()=='$' && a=='$') || (opstack.top()=='^' && a=='^') ||
-                   (opstack.top()=='$' && a=='^') || (opstack.top()=='^' && a=='$')){
-                    break;
-                }
-                postfixStack.push(opstack.top());
-                opstack.pop();
+        else {
+            while (!operators.empty() && precedence(operators.top()) > precedence(c)) {
+                prefix = operators.top() + prefix;
+                operators.pop();
             }
-            opstack.push(a);
+            operators.push(c);
         }
 
-        string postStr = "";
-        stack<char> temp = postfixStack;
-        while(!temp.empty()){ postStr = temp.top() + postStr; temp.pop(); }
-        string opStr = stackToString(opstack);
-        printConversionRow(a, postStr, opStr);
+        string opStr = stackToString(operators);
+        printConversionRow(c, prefix, opStr);
     }
 
-    while(!opstack.empty()){
-        if(opstack.top()=='(' || opstack.top()=='{' || opstack.top()=='[')
-            return "Error: Extra Open Bracket in Prefix Conversion";
-        postfixStack.push(opstack.top());
-        opstack.pop();
+    while (!operators.empty()) {
+        prefix = operators.top() + prefix;
+        operators.pop();
     }
 
-    string prefix = "";
-    while(!postfixStack.empty()){ prefix = postfixStack.top() + prefix; postfixStack.pop(); }
     return prefix;
 }
+
 
 int evalPostfix(const string &postfix){
     stack<int> valStack;
