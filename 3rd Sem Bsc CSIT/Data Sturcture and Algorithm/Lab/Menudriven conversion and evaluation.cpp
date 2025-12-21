@@ -3,7 +3,7 @@
 #include <cmath>
 #include <string>
 #include <iomanip>
-#include<algorithm>
+
 using namespace std;
 
 int precedence(char op) {
@@ -266,3 +266,4 @@ int main(){
 
     return 0;
 }
+
