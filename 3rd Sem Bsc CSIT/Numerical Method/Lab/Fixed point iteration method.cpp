@@ -2,7 +2,7 @@
 #include <math.h>
 
 double g(double x){
-    return (x*x + 2)/3;
+    return cbrt(3 + 3*x - x*x);
 }
 
 int main(){
