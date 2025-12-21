@@ -125,7 +125,9 @@ string infixToPrefix(const string &infix) {
             if (!operators.empty()) operators.pop();
         }
         else {
-            while (!operators.empty() && precedence(operators.top()) > precedence(c)) {
+            while (!operators.empty() && 
+                  ((precedence(operators.top()) > precedence(c)) || 
+                   (precedence(operators.top()) == precedence(c) && c != '^' && c != '$'))) {
                 prefix = operators.top() + prefix;
                 operators.pop();
             }
@@ -264,4 +266,3 @@ int main(){
 
     return 0;
 }
-
