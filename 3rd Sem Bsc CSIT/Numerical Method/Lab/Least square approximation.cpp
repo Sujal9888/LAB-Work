@@ -5,6 +5,7 @@ int main() {
     float x[10], y[10];
     float sx = 0, sy = 0, sxy = 0, sx2 = 0;
     float a, b, x0, y0;
+    printf("\n---Least Square Approximation (Linear)---\n");
 
     printf("Enter number of points: ");
     scanf("%d", &n);

@@ -7,7 +7,7 @@ int main() {
     float sx = 0, sY = 0, sxY = 0, sx2 = 0;
     float a, b, A;
     float x0, y0;
-
+ 	printf("\n---Least Square Approximation (Non-Linear)---\n");
     printf("Enter number of points: ");
     scanf("%d", &n);
 
