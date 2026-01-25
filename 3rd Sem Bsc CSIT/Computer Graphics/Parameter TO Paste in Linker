@@ -1,0 +1,7 @@
+Paste the following instructions in Linker Textarea.
+-lbgi
+-lgdi32
+-lcomdlg32
+-luuid
+-loleaut32
+-lole32
