@@ -1,209 +1,224 @@
 #include<iostream>
 using namespace std;
-struct Node{
-	int info;
-	Node* prev;
-	Node* next;
+
+struct Node {
+    int info;
+    Node* prev;
+    Node* next;
 };
-void insertBeginning(Node* &head, int data){
-	Node* newNode = new Node;
-	newNode->info = data;
-	if(head==NULL){
-		newNode->next = NULL;
-		newNode->prev = NULL;
-		head = newNode;
-		return;
-	}
-	Node* temp = head;
-	newNode->next = head;
-	newNode->prev = NULL;
-	temp->prev = newNode;
-	head = newNode;
-}
-void insertEnd(Node* &head, int data){
-	Node* newNode = new Node;
-	newNode->info = data;
-	if(head == NULL){
-		newNode->next = NULL;
-		newNode->prev = NULL;
-		head = newNode;
-		return;
-	}
-	Node* temp = head;
-	while(temp->next!=NULL){
-		temp = temp->next;
-	}
-	temp->next = newNode;
-	newNode->next = NULL;
-	newNode->prev = temp;	
-}
-void insertSpecificPoint(Node* &head, int data, int pos){
-	Node* newNode = new Node;
-	newNode->info = data;
 
-	int count = 1;
-	int i=1;
-	Node* temp = head;
-	while(temp!=NULL){
-		count++;
-		temp = temp->next;
-	}
-	if(pos>count+1){
-		cout<<"Invalid Position"<<endl;
-		delete newNode;
-		return;
-	}
-	if(pos == 1){
-		newNode->next = head;
-		newNode->prev = NULL;
-		if(head!=NULL) head->prev = newNode;	
-		head = newNode;
-		return;
-	}
+// Insert at beginning
+void insertBeginning(Node* &head, int data) {
+    Node* newNode = new Node;
+    newNode->info = data;
+    newNode->prev = NULL;
+    newNode->next = head;
 
-	temp = head;
-	while(i!=pos-1&&temp->next!=NULL){
-		temp = temp->next;
-		i++;
-	}
-	
-	if(temp->next == NULL){
-		newNode->prev = temp;
-		newNode->next = NULL;
-		temp->next = newNode;
-		return;
-	}
-	Node* ins = temp->next;
-	newNode->prev = temp;
-	newNode->next = ins;
-	temp->next = newNode;
-	ins->prev = newNode;
+    if(head != NULL)
+        head->prev = newNode;
 
-}
-void deleteBeginning(Node* &head){
-	if(head==NULL){
-		cout<<"Error: Empty List"<<endl;
-		return;
-	}
-	if(head->next == NULL){
-		cout<<head->info<<" deleted"<<endl;
-		delete head;
-		head = NULL;
-		return;
-	}
-	Node* temp = head;
-	head = temp->next;
-	head->prev = NULL;
-	cout<<temp->info<<" deleted"<<endl;
-	delete temp;
-}
-void deleteEnd(Node* &head){
-	if(head==NULL){
-		cout<<"Error: Empty List"<<endl;
-		return;
-	}
-	if(head->next==NULL){
-		cout<<head->info<<" deleted"<<endl;
-		delete head;
-		head = NULL;
-		return;
-	}
-	Node* temp = head;
-	while(temp->next->next!=NULL){
-		temp  = temp->next;
-	}
-	Node* del = temp->next;
-	cout<<del->info<<" deleted"<<endl;
-	delete del;
-	temp->next = NULL;
-}
-void deleteSpecificPoint(Node* &head, int pos){
-	if(head==NULL){
-		cout<<"Error: Empty List"<<endl;
-		return;
-	}
-	
-	if(pos==1){
-		Node* del = head;
-		cout<<del->info<<" deleted"<<endl;
-		head = head->next;
-		if(head!=NULL)head->prev = NULL;
-		delete del;
-		return;	
-	}
-	int i=1;
-	Node* temp = head;
-	while(temp->next!=NULL &&  i < pos-1){
-		temp = temp->next;
-		i++;
-	}
-	if(temp==NULL||temp->next==NULL){
-		cout<<"Invalid Position"<<endl;
-		return;
-	}
-	Node* del = temp->next;
-	cout<<del->info<<" deleted"<<endl;
-	temp->next = del->next;
-	if(del->next!=NULL) del->next->prev = temp;
-	delete del;
-}
-void doublyTraverse(Node* head){
-	Node* temp = head;
-	if(head==NULL){
-		cout<<"List is empty"<<endl;
-		return;
-	}
-	while(temp->next!=NULL){
-		cout<<temp->info<<" ";
-		temp = temp->next;
-	}
-	cout<<temp->info<<" "<<endl;
-}
-int main(){
-	Node* head = NULL;
-	int choice,data,pos;
-	do{
-		cout<<"-----Doubly LinkList----"<<endl;
-		cout<<" 1. Insert at Beginning\n 2. Insert at End\n 3. Insert at Specific Point\n 4. Delete at Beginning\n 5. Delete at End\n 6. Delete at Specific Point\n 7. Traverse\n 8. Exit"<<endl;
-		cin>>choice;
-		switch(choice){
-			case 1:
-				cout<<"Enter Data to Store at Beginning: ";
-				cin>>data;
-				insertBeginning(head,data);
-				break;
-			case 2:
-				cout<<"Enter Data to Store at End: ";
-				cin>>data;
-				insertEnd(head,data);
-				break;
-			case 3:
-				cout<<"Enter Position and Data to Store: ";
-				cin>>pos>>data;
-				insertSpecificPoint(head,data,pos);
-				break;
-			case 4:
-				deleteBeginning(head);
-				break;
-			case 5:
-				deleteEnd(head);
-				break;
-			case 6:
-				cout<<"Enter Position: ";
-				cin>>pos;
-				deleteSpecificPoint(head,pos);
-				break;
-			case 7:
-				doublyTraverse(head);
-				break;
-			case 8:
-				cout<<"Exitting..."<<endl;
-				break;
-			default:
-				cout<<"Invalid Input"<<endl;
-				break;	
-		}
-	}while(choice!=8);
-	return 0;
+    head = newNode;
 }
 
+// Insert at end
+void insertEnd(Node* &head, int data) {
+    Node* newNode = new Node;
+    newNode->info = data;
+    newNode->next = NULL;
+
+    if(head == NULL) {
+        newNode->prev = NULL;
+        head = newNode;
+        return;
+    }
+
+    Node* temp = head;
+    while(temp->next != NULL)
+        temp = temp->next;
+
+    temp->next = newNode;
+    newNode->prev = temp;
+}
+
+// Insert at a specific position
+void insertSpecificPoint(Node* &head, int data, int pos) {
+    if(pos < 1) {
+        cout << "Invalid Position" << endl;
+        return;
+    }
+
+    if(pos == 1) {
+        insertBeginning(head, data);
+        return;
+    }
+
+    Node* temp = head;
+    int i = 1;
+    while(temp != NULL && i < pos-1) {
+        temp = temp->next;
+        i++;
+    }
+
+    if(temp == NULL) {
+        cout << "Invalid Position" << endl;
+        return;
+    }
+
+    Node* newNode = new Node;
+    newNode->info = data;
+    newNode->next = temp->next;
+    newNode->prev = temp;
+
+    if(temp->next != NULL)
+        temp->next->prev = newNode;
+
+    temp->next = newNode;
+}
+
+// Delete from beginning
+void deleteBeginning(Node* &head) {
+    if(head == NULL) {
+        cout << "Error: Empty List" << endl;
+        return;
+    }
+
+    Node* temp = head;
+    head = head->next;
+
+    if(head != NULL)
+        head->prev = NULL;
+
+    cout << temp->info << " deleted" << endl;
+    delete temp;
+}
+
+// Delete from end
+void deleteEnd(Node* &head) {
+    if(head == NULL) {
+        cout << "Error: Empty List" << endl;
+        return;
+    }
+
+    Node* temp = head;
+    if(temp->next == NULL) { // Only one node
+        cout << temp->info << " deleted" << endl;
+        delete temp;
+        head = NULL;
+        return;
+    }
+
+    while(temp->next != NULL)
+        temp = temp->next;
+
+    cout << temp->info << " deleted" << endl;
+    temp->prev->next = NULL;
+    delete temp;
+}
+
+// Delete from a specific position
+void deleteSpecificPoint(Node* &head, int pos) {
+    if(head == NULL) {
+        cout << "Error: Empty List" << endl;
+        return;
+    }
+
+    if(pos < 1) {
+        cout << "Invalid Position" << endl;
+        return;
+    }
+
+    if(pos == 1) {
+        deleteBeginning(head);
+        return;
+    }
+
+    Node* temp = head;
+    int i = 1;
+    while(temp != NULL && i < pos) {
+        temp = temp->next;
+        i++;
+    }
+
+    if(temp == NULL) {
+        cout << "Invalid Position" << endl;
+        return;
+    }
+
+    if(temp->prev != NULL)
+        temp->prev->next = temp->next;
+    if(temp->next != NULL)
+        temp->next->prev = temp->prev;
+
+    cout << temp->info << " deleted" << endl;
+    delete temp;
+}
+
+// Traverse the list
+void doublyTraverse(Node* head) {
+    if(head == NULL) {
+        cout << "List is empty" << endl;
+        return;
+    }
+
+    Node* temp = head;
+    while(temp != NULL) {
+        cout << temp->info << " ";
+        temp = temp->next;
+    }
+    cout << endl;
+}
+
+// Main menu
+int main() {
+    Node* head = NULL;
+    int choice, data, pos;
+
+    do {
+        cout << "\n-----Doubly Linked List----" << endl;
+        cout << "1. Insert at Beginning\n2. Insert at End\n3. Insert at Specific Point\n";
+        cout << "4. Delete at Beginning\n5. Delete at End\n6. Delete at Specific Point\n";
+        cout << "7. Traverse\n8. Exit" << endl;
+        cout << "Enter Your Choice: ";
+        cin >> choice;
+
+        switch(choice) {
+            case 1:
+                cout << "Enter Data to Store at Beginning: ";
+                cin >> data;
+                insertBeginning(head, data);
+                break;
+            case 2:
+                cout << "Enter Data to Store at End: ";
+                cin >> data;
+                insertEnd(head, data);
+                break;
+            case 3:
+                cout << "Enter Position and Data to Store: ";
+                cin >> pos >> data;
+                insertSpecificPoint(head, data, pos);
+                break;
+            case 4:
+                deleteBeginning(head);
+                break;
+            case 5:
+                deleteEnd(head);
+                break;
+            case 6:
+                cout << "Enter Position: ";
+                cin >> pos;
+                deleteSpecificPoint(head, pos);
+                break;
+            case 7:
+                doublyTraverse(head);
+                break;
+            case 8:
+                cout << "Exiting..." << endl;
+                break;
+            default:
+                cout << "Invalid Input" << endl;
+                break;  
+        }
+    } while(choice != 8);
+
+    return 0;
+}
