@@ -26,7 +26,7 @@ int main(){
 
     } while(fabs(x2 - x1) >= 0.0001);
 
-    printf("\nRoot ˜ %.6lf\n", x2);
+    printf("\nRoot is found at %.6lf\n", x2);
 
     return 0;
 }
