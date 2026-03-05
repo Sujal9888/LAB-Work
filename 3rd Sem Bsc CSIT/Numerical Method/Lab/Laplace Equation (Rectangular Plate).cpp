@@ -8,8 +8,9 @@ int main() {
     float tol = 0.01;
     float maxError;
     int iter = 0;
-
-    printf("Iter\tU1\t\tU2\t\tU3\t\tU4\n");
+	
+	printf("---Laplace Equation---\n");
+    printf("\nIter\tU1\t\tU2\t\tU3\t\tU4\n");
 
     do {
         oldU1 = U1;
@@ -26,8 +27,7 @@ int main() {
 
         iter++;
 
-        printf("%d\t%.4f\t%.4f\t%.4f\t%.4f\n",
-               iter, U1, U2, U3, U4);
+        printf("%d\t%10.4f\t%10.4f\t%.4f\t%.4f\n",iter, U1, U2, U3, U4);
 
         maxError = fabs(U1 - oldU1);
         if (fabs(U2 - oldU2) > maxError)
