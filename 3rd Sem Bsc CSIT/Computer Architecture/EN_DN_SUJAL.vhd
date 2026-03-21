@@ -2,14 +2,17 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
 entity EN_DN_SUJAL is
-    Port ( d_in   : in  STD_LOGIC_VECTOR(3 downto 0);  -- 4-to-2 Encoder input
-           a_in   : in  STD_LOGIC_VECTOR(1 downto 0);  -- 2-to-4 Decoder input
-           enc_out: out STD_LOGIC_VECTOR(1 downto 0);  -- Encoder output
-           dec_out: out STD_LOGIC_VECTOR(3 downto 0)); -- Decoder output
+    Port (
+        d_in    : in  STD_LOGIC_VECTOR(3 downto 0);  -- Encoder input
+        a_in    : in  STD_LOGIC_VECTOR(1 downto 0);  -- Decoder input
+        enc_out : out STD_LOGIC_VECTOR(1 downto 0);  -- Encoder output
+        dec_out : out STD_LOGIC_VECTOR(3 downto 0)   -- Decoder output
+    );
 end EN_DN_SUJAL;
 
 architecture Behavioral of EN_DN_SUJAL is
 begin
+
     -- 4-to-2 Encoder
     process(d_in)
     begin
@@ -18,7 +21,7 @@ begin
             when "0010" => enc_out <= "01";
             when "0100" => enc_out <= "10";
             when "1000" => enc_out <= "11";
-            when others => enc_out <= "00";
+            when others => enc_out <= "XX";  -- invalid input
         end case;
     end process;
 
@@ -33,4 +36,5 @@ begin
             when others => dec_out <= "0000";
         end case;
     end process;
+
 end Behavioral;
