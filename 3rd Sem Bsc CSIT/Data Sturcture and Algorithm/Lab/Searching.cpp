@@ -1,10 +1,44 @@
 #include <iostream>
 using namespace std;
 
+struct Node {
+    int data;
+    Node* left;
+    Node* right;
+};
+
+Node* insert(Node* root, int value){
+    if(root == NULL){
+        Node* newNode = new Node();
+        newNode->data = value;
+        newNode->left = newNode->right = NULL;
+        return newNode;
+    }
+
+    if(value < root->data)
+        root->left = insert(root->left, value);
+    else
+        root->right = insert(root->right, value);
+
+    return root;
+}
+
+Node* searchBST(Node* root, int key){
+    if(root == NULL || root->data == key)
+        return root;
+
+    if(key < root->data)
+        return searchBST(root->left, key);
+
+    return searchBST(root->right, key);
+}
+
 int main() {
     int arr[100], n, key, choice;
     int low, high, mid, i;
     int found;
+
+    Node* root = NULL;
 
     cout << "Enter number of elements: ";
     cin >> n;
@@ -12,13 +46,15 @@ int main() {
     cout << "Enter elements:\n";
     for(i = 0; i < n; i++){
         cin >> arr[i];
+        root = insert(root, arr[i]); // insert into BST
     }
 
     do {
         cout << "\n--- Searching Menu ---\n";
-        cout << "1. Sequential Search\n";
-        cout << "2. Binary Search\n";
-        cout << "3. Exit\n";
+        cout << "1. Sequential / Linear Search\n";
+        cout << "2. Binary Search (Array)\n";
+        cout << "3. Binary Search Tree (Linked List)\n";
+        cout << "4. Exit\n";
         cout << "Enter your choice: ";
         cin >> choice;
 
@@ -39,7 +75,6 @@ int main() {
 
             if(found == 0)
                 cout << "Element not found\n";
-
             break;
 
         case 2:
@@ -66,10 +101,19 @@ int main() {
 
             if(found == 0)
                 cout << "Element not found\n";
-
             break;
 
         case 3:
+            cout << "Enter element to search in BST: ";
+            cin >> key;
+
+            if(searchBST(root, key) != NULL)
+                cout << "Element found in BST\n";
+            else
+                cout << "Element not found in BST\n";
+            break;
+
+        case 4:
             cout << "Program ended.\n";
             break;
 
@@ -77,7 +121,7 @@ int main() {
             cout << "Invalid choice\n";
         }
 
-    } while(choice != 3);
+    } while(choice != 4);
 
     return 0;
 }
